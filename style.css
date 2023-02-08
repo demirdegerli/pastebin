@@ -1,0 +1,93 @@
+html, body, form {
+    background: #002b36;
+    color: white;
+    height: 98.7%;
+    width: 99.6%;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+    background: #002b36;
+    color: white;
+    border: none;
+    outline: none;
+    resize: none;
+}
+
+button[name=save], button[name=raw] {
+    background: rgb(53, 107, 255);
+    color: white;
+    width: 6vh;
+    height: 3vh;
+    border-radius: 10px;
+    border: none;
+    position: absolute;
+    right: 0.5%;
+    bottom: 96%;
+    z-index: 1;
+    font-size: 1.5vh;
+}
+
+button:hover {
+    filter: brightness(85%);
+    cursor: pointer;
+}
+
+a {
+    color: #8ab4f8;
+    text-decoration: none;
+    }
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    position: absolute;
+    bottom: 0%;
+    left: 1%;
+    z-index: 1;
+}
+
+.error {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+input[name=encrypt] {
+  display: none;
+}
+button[name=encrypt-btn-inactive] {
+  z-index: 1;
+  position: absolute;
+  bottom: 92%;
+  right: 0.5%;
+  border-radius: 10px;
+  background: #bfbfbf;
+  color: black;
+  width: 6vh;
+  height: 3vh;
+  border: none;
+  font-size: 1.5vh;
+}
+button[name=encrypt-btn-active] {
+  z-index: 1;
+  position: absolute;
+  bottom: 92%;
+  right: 0.5%;
+  border-radius: 10px;
+  background: limegreen;
+  color: white;
+  width: 7.7vh;
+  height: 3vh;
+  border: none;
+  font-size: 1.5vh;
+}

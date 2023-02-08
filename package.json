@@ -1,0 +1,20 @@
+{
+  "name": "pastebin",
+  "version": "1.0.0",
+  "description": "Simple pastebin server that has encryption support.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aes256": "latest",
+    "express": "latest",
+    "express-hbs": "latest",
+    "hbs": "latest",
+    "quick.db": "latest",
+    "better-sqlite3": "latest"
+  }
+}

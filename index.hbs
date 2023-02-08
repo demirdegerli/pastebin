@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastebin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form action="/" method="POST">
+        <textarea name="content" spellcheck="false"></textarea>
+        <button name="save" type="submit">Submit</button>
+        <p>{{{c}}}</p>
+      <input id="encrypt" name="encrypt" type="checkbox">
+    </form>
+  <button id="encrypt-btn" onclick="javascript:var ebtn=document.getElementById('encrypt-btn');var eipt=document.getElementById('encrypt');eipt.checked=!eipt.checked;if(ebtn.name==='encrypt-btn-inactive'){ebtn.innerHTML='Encrypted';ebtn.name='encrypt-btn-active';}else{ebtn.innerHTML='Plain';ebtn.name='encrypt-btn-inactive'}" name="encrypt-btn-inactive">Plain</button>
+</body>
+</html>
