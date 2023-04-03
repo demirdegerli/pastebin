@@ -1,5 +1,5 @@
 # Pastebin
-Simple pastebin server that has encryption support.
+Simple pastebin server with encryption support.
 
 ## Get started
 Install all required dependencies
