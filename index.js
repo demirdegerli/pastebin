@@ -23,6 +23,10 @@ async function dbhas(key) {
 async function dball() {
   return await db.all()
 }
+// delete data from database
+async function dbdelete(key) {
+  await db.delete(key)
+}
 
 function decrypt(key, hash) {
   try {
@@ -31,6 +35,12 @@ function decrypt(key, hash) {
     return hash;
   }
 }
+
+function generateKey() {
+  return Math.random().toString(36).slice(-10)+Math.random().toString(36).slice(-10)+Math.random().toString(36).slice(-10);
+}
+
+var queue = new Map();
 
 app.set('view engine', 'hbs');
 app.use(express.urlencoded({ extended: true, limit: '50mb' }))
@@ -43,14 +53,16 @@ app.post("/", async (req, res) => {
     if(!req.body.content) return res.render(__dirname+"/"+"index.hbs", {c:"Content cannot be empty."})
     if(req.body.content.length > 100000) return res.render(__dirname+"/"+"index.hbs", {c:`Character limit exceeded! (100000)`});
     if(req.body.encrypt === "on") {
-      key = Math.random().toString(36).slice(-10)+Math.random().toString(36).slice(-10)+Math.random().toString(36).slice(-10);
+      key = generateKey()
       req.body.content = aes256.encrypt(key, req.body.content);
     }
     let random = Math.random().toString(36).slice(-8)
     do {
       random = Math.random().toString(36).slice(-8)
     } while (await dbhas(random))
-    await dbset(random, req.body.content)
+    let deletion_key = generateKey()
+    await dbset(random, {"content": req.body.content, "deletion_key": deletion_key})
+    queue.set(random, true)
   res.redirect(`//${req.headers["x-forwarded-host"] ? req.headers["x-forwarded-host"] : req.headers.host}/${random}${key?'?key='+key:''}`)
 })
 
@@ -66,7 +78,7 @@ app.get("/highlight.min.js", (_, res) => {
 
 app.get("/raw/:paste", async (req, res) => {
     if(req.params.paste && await dbhas(req.params.paste)) {
-      var output = await dbget(req.params.paste);
+      var output = (await dbget(req.params.paste)).content;
       if(req.query.key) {
         output = decrypt(req.query.key, output);
       }
@@ -79,7 +91,7 @@ app.get("/raw/:paste", async (req, res) => {
 
 app.get("/:paste", async (req, res) => {
     if(req.params.paste && await dbhas(req.params.paste)) {
-      var output = await dbget(req.params.paste);
+      var output = (await dbget(req.params.paste)).content;
       var raw = `//${req.headers["x-forwarded-host"] ? req.headers["x-forwarded-host"] : req.headers.host}/raw/${req.params.paste}`;
       if(req.query.key) {
         output = decrypt(req.query.key, output);
@@ -87,11 +99,26 @@ app.get("/:paste", async (req, res) => {
       }
         res.render(__dirname+"/"+"paste.hbs", {
             c: output,
-            r: raw
+            r: raw,
+            d: queue.has(req.params.paste) ? `<a href="//${req.headers["x-forwarded-host"] ? req.headers["x-forwarded-host"] : req.headers.host}/delete/${req.params.paste}?key=${(await dbget(req.params.paste)).deletion_key}">Click</a> to delete. You can't delete your paste after you leave the page.` : ""
         })
+        queue.delete(req.params.paste);
     } else {
         res.render(__dirname+"/"+"error.hbs", {c:"Not found."})
     }
+})
+
+app.get("/delete/:paste", async (req, res) => {
+  if(req.params.paste && await dbhas(req.params.paste)) {
+    if(req.query.key && req.query.key == (await dbget(req.params.paste)).deletion_key) {
+      dbdelete(req.params.paste)
+      res.render(__dirname+"/"+"index.hbs", {c:"Deleted."})
+    } else {
+      res.render(__dirname+"/"+"error.hbs", {c: "You don't have permission to delete this paste."})
+    }
+  } else {
+    res.render(__dirname+"/"+"error.hbs", {c: "Not found."})
+  }
 })
 
 var listener = app.listen(80, async () => {
