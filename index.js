@@ -85,7 +85,7 @@ app.get("/raw/:paste", async (req, res) => {
         res.type('text/plain')
         res.send(output)
     } else {
-        res.send("Not found.")
+        res.status(404).send("Not found.")
     }
 })
 
@@ -104,7 +104,7 @@ app.get("/:paste", async (req, res) => {
         })
         queue.delete(req.params.paste);
     } else {
-        res.render(__dirname+"/"+"error.hbs", {c:"Not found."})
+        res.status(404).render(__dirname+"/"+"error.hbs", {c:"Not found."})
     }
 })
 
@@ -114,10 +114,10 @@ app.get("/delete/:paste", async (req, res) => {
       dbdelete(req.params.paste)
       res.render(__dirname+"/"+"index.hbs", {c:"Deleted."})
     } else {
-      res.render(__dirname+"/"+"error.hbs", {c: "You don't have permission to delete this paste."})
+      res.status(403).render(__dirname+"/"+"error.hbs", {c: "You don't have permission to delete this paste."})
     }
   } else {
-    res.render(__dirname+"/"+"error.hbs", {c: "Not found."})
+    res.status(404).render(__dirname+"/"+"error.hbs", {c: "Not found."})
   }
 })
 
