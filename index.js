@@ -7,6 +7,8 @@ const db = new QuickDB();
 
 const aes256 = require("aes256");
 
+const settings = require("./settings.json");
+
 // save data to database
 async function dbset(key, value) {
   await db.set(key, value)
@@ -121,6 +123,6 @@ app.get("/delete/:paste", async (req, res) => {
   }
 })
 
-var listener = app.listen(80, async () => {
+var listener = app.listen(settings.port, async () => {
     console.log(`Server is listening on http(s)://${listener.address().address}:${listener.address().port} (${listener.address().family})`)
 });
