@@ -1,7 +1,7 @@
 {
   "name": "pastebin",
   "version": "1.0.0",
-  "description": "Simple pastebin server that has encryption support.",
+  "description": "Simple pastebin server with encryption support.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
