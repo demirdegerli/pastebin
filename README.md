@@ -6,6 +6,13 @@ Install all required dependencies
 ```
 npm install
 ```
+#### Change the port (optional)
+In `settings.json`:
+```js
+{
+  "port": <port> // change <port> to the port number you want
+}
+```
 Run the server!
 ```
 node .
