@@ -114,7 +114,7 @@ app.get("/delete/:paste", async (req, res) => {
       dbdelete(req.params.paste)
       res.render(__dirname+"/"+"index.hbs", {c:"Deleted."})
     } else {
-      res.status(403).render(__dirname+"/"+"error.hbs", {c: "You don't have permission to delete this paste."})
+      res.status(401).render(__dirname+"/"+"error.hbs", {c: "You don't have permission to delete this paste."})
     }
   } else {
     res.status(404).render(__dirname+"/"+"error.hbs", {c: "Not found."})
