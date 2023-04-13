@@ -53,7 +53,7 @@ app.get("/", (req, res) => {
 app.post("/", async (req, res) => {
     let key = false;
     if(!req.body.content) return res.render(__dirname+"/"+"index.hbs", {c:"Content cannot be empty."})
-    if(req.body.content.length > 100000) return res.render(__dirname+"/"+"index.hbs", {c:`Character limit exceeded! (100000)`});
+    if(req.body.content.length > settings.charlimit) return res.render(__dirname+"/"+"index.hbs", {c:`Character limit exceeded! (${settings.charlimit})`});
     if(req.body.encrypt === "on") {
       key = generateKey()
       req.body.content = aes256.encrypt(key, req.body.content);
