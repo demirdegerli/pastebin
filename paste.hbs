@@ -14,9 +14,18 @@
     <a href="/"><h3 id="name"></h3></a>
     <pre><code class="hljs">{{c}}</code></pre>
     <a href="{{r}}"><button name="raw">RAW</button></a>
+    <button name="copy" onclick="copyToClipboard()">Copy</button>
     <p name="paste-info">{{{d}}}</p>
     <script>
         document.getElementById("name").innerHTML = window.location.hostname;
+        function copyToClipboard() {
+            navigator.clipboard.writeText(document.getElementsByClassName("hljs")[0].innerText)
+            let copyButton = document.getElementsByName("copy")[0];
+            copyButton.innerHTML = "Copied!";
+            setTimeout(() => {
+                copyButton.innerHTML = "Copy";
+            }, 700)
+        }
     </script>
 </body>
 </html>
