@@ -30,6 +30,20 @@ button[name=save], button[name=raw] {
     font-size: 1.5vh;
 }
 
+button[name=copy] {
+    background: rgb(53, 107, 255);
+    color: white;
+    width: 6vh;
+    height: 3vh;
+    border-radius: 10px;
+    border: none;
+    position: absolute;
+    right: 0.5%;
+    bottom: 92%;
+    z-index: 1;
+    font-size: 1.5vh;
+}
+
 button:hover {
     filter: brightness(85%);
     cursor: pointer;
