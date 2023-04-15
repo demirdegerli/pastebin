@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+  <a href="/"><h3 id="name"></h3></a>
   <p class="error">{{{c}}}</p>
+
+  <script>
+      document.getElementById("name").innerHTML = window.location.hostname;
+  </script>
 </body>
 </html>
