@@ -63,7 +63,7 @@ app.post("/", async (req, res) => {
       random = Math.random().toString(36).slice(-8)
     } while (await dbhas(random))
     let deletion_key = generateKey()
-    await dbset(random, {"content": req.body.content, "deletion_key": deletion_key})
+    await dbset(random, {"content": req.body.content, "deletion_key": deletion_key, "encrypted": req.body.encrypt === "on"})
     queue.set(random, true)
   res.redirect(`//${req.headers["x-forwarded-host"] ? req.headers["x-forwarded-host"] : req.headers.host}/${random}${key?'?key='+key:''}`)
 })
@@ -95,6 +95,7 @@ app.get("/:paste", async (req, res) => {
     if(req.params.paste && await dbhas(req.params.paste)) {
       var output = (await dbget(req.params.paste)).content;
       var raw = `//${req.headers["x-forwarded-host"] ? req.headers["x-forwarded-host"] : req.headers.host}/raw/${req.params.paste}`;
+      var isEncrypted = (await db.get(req.params.paste))["encrypted"] ? (await db.get(req.params.paste))["encrypted"] : false;
       if(req.query.key) {
         output = decrypt(req.query.key, output);
         raw += `?key=${req.query.key}`
@@ -102,7 +103,7 @@ app.get("/:paste", async (req, res) => {
         res.render(__dirname+"/"+"paste.hbs", {
             c: output,
             r: raw,
-            d: queue.has(req.params.paste) ? `<a href="//${req.headers["x-forwarded-host"] ? req.headers["x-forwarded-host"] : req.headers.host}/delete/${req.params.paste}?key=${(await dbget(req.params.paste)).deletion_key}">Click</a> to delete. You can't delete your paste after you leave the page.` : ""
+            d: queue.has(req.params.paste) ? `<a href="//${req.headers["x-forwarded-host"] ? req.headers["x-forwarded-host"] : req.headers.host}/delete/${req.params.paste}?key=${(await dbget(req.params.paste)).deletion_key}">Click</a> to delete. You can't delete your paste after you leave the page.` : (isEncrypted ? "This paste is encrypted. If it doesn't look right, you may have the wrong key or don't have the key." : "")
         })
         queue.delete(req.params.paste);
     } else {
