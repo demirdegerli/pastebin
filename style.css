@@ -38,7 +38,7 @@ button:hover {
 a {
     color: #8ab4f8;
     text-decoration: none;
-    }
+}
 
 a:hover {
     text-decoration: underline;
@@ -96,4 +96,9 @@ button[name=encrypt-btn-active] {
   height: 3vh;
   border: none;
   font-size: 1.5vh;
+}
+
+h3 {
+    position: relative;
+    left: 1.5vh;
 }
