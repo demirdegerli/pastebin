@@ -29,6 +29,16 @@ async function dball() {
 async function dbdelete(key) {
   await db.delete(key)
 }
+// check database
+async function checkDb() {
+  let status = true;
+  try {
+    await db.has("test")
+  } catch {
+    status = false;
+  }
+  return status;
+}
 
 function decrypt(key, hash) {
   try {
@@ -54,6 +64,7 @@ app.post("/", async (req, res) => {
     let key = false;
     if(!req.body.content) return res.render(__dirname+"/"+"index.hbs", {c:"Content cannot be empty."})
     if(req.body.content.length > settings.charlimit) return res.render(__dirname+"/"+"index.hbs", {c:`Character limit exceeded! (${settings.charlimit})`});
+    if(!checkDb()) return res.status(500).render(__dirname+"/"+"index.hbs", {c:"Couldn't save the paste. Please try again later."})
     if(req.body.encrypt === "on") {
       key = generateKey()
       req.body.content = aes256.encrypt(key, req.body.content);
@@ -79,6 +90,7 @@ app.get("/highlight.min.js", (_, res) => {
 })
 
 app.get("/raw/:paste", async (req, res) => {
+    if(!checkDb()) return res.status(500).send("Couldn't get the paste. Please try again later.")
     if(req.params.paste && await dbhas(req.params.paste)) {
       var output = (await dbget(req.params.paste)).content;
       if(req.query.key) {
@@ -92,6 +104,7 @@ app.get("/raw/:paste", async (req, res) => {
 })
 
 app.get("/:paste", async (req, res) => {
+    if(!checkDb()) return res.status(500).render(__dirname+"/"+"error.hbs", {c:"Couldn't get the paste. Please try again later."})
     if(req.params.paste && await dbhas(req.params.paste)) {
       var output = (await dbget(req.params.paste)).content;
       var raw = `//${req.headers["x-forwarded-host"] ? req.headers["x-forwarded-host"] : req.headers.host}/raw/${req.params.paste}`;
@@ -112,6 +125,7 @@ app.get("/:paste", async (req, res) => {
 })
 
 app.get("/delete/:paste", async (req, res) => {
+  if(!checkDb()) return res.status(500).send("Couldn't get the paste. Please try again later.")
   if(req.params.paste && await dbhas(req.params.paste)) {
     if(req.query.key && req.query.key == (await dbget(req.params.paste)).deletion_key) {
       dbdelete(req.params.paste)
