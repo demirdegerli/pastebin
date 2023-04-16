@@ -3,18 +3,19 @@ Simple pastebin server with encryption support.
 
 ## Get started
 Install all required dependencies
-```
+```sh
 npm install
 ```
-#### Change the port (optional)
+#### Change the port and character limit (optional)
 In `settings.json`:
 ```js
 {
-  "port": <port> // change <port> to the port number you want
+  "port": {port}, // change {port} to the port number you want
+  "charlimit": {character_count} // change {character_count} to the character limit you want
 }
 ```
 Run the server!
-```
+```sh
 node .
 ```
 
