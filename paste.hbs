@@ -15,6 +15,7 @@
     <pre><code class="hljs">{{c}}</code></pre>
     <a href="{{r}}"><button name="raw">RAW</button></a>
     <button name="copy" onclick="copyToClipboard()">Copy</button>
+    <button name="share" onclick="shareURL()">Share</button>
     <p name="paste-info">{{{d}}}</p>
     <script>
         document.getElementById("name").innerHTML = window.location.hostname;
@@ -25,6 +26,14 @@
             setTimeout(() => {
                 copyButton.innerHTML = "Copy";
             }, 700)
+        }
+        function shareURL() {
+            try {
+                navigator.share({"url": window.location.href})
+            } catch {
+                navigator.clipboard.writeText(window.location.href)
+                alert("Your browser does not support sharing. So the link copied to your clipboard.")
+            }
         }
     </script>
 </body>
