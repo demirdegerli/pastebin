@@ -24,7 +24,7 @@ button[name=save], button[name=raw] {
     border-radius: 10px;
     border: none;
     position: absolute;
-    right: 0.5%;
+    right: 0.5vh;
     bottom: 96%;
     z-index: 1;
     font-size: 1.5vh;
@@ -38,8 +38,8 @@ button[name=copy] {
     border-radius: 10px;
     border: none;
     position: absolute;
-    right: 0.5%;
-    bottom: 92%;
+    right: 7vh;
+    bottom: 96%;
     z-index: 1;
     font-size: 1.5vh;
 }
@@ -52,8 +52,8 @@ button[name=share] {
     border-radius: 10px;
     border: none;
     position: absolute;
-    right: 0.5%;
-    bottom: 88%;
+    right: 13.5vh;
+    bottom: 96%;
     z-index: 1;
     font-size: 1.5vh;
 }
@@ -103,7 +103,7 @@ button[name=encrypt-btn-inactive] {
   z-index: 1;
   position: absolute;
   bottom: 92%;
-  right: 0.5%;
+  right: 0.5vh;
   border-radius: 10px;
   background: #bfbfbf;
   color: black;
@@ -116,7 +116,7 @@ button[name=encrypt-btn-active] {
   z-index: 1;
   position: absolute;
   bottom: 92%;
-  right: 0.5%;
+  right: 0.5vh;
   border-radius: 10px;
   background: limegreen;
   color: white;
