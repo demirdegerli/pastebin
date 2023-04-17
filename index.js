@@ -138,6 +138,14 @@ app.get("/delete/:paste", async (req, res) => {
   }
 })
 
+app.get('/raw/*', async (req, res) => {
+    res.status(404).send("Not found.")
+});
+
+app.get('*', async (req, res) => {
+    res.status(404).render(__dirname+"/"+"error.hbs", {c: "Not found."})
+});
+
 var listener = app.listen(settings.port, async () => {
     console.log(`Server is listening on http(s)://${listener.address().address}:${listener.address().port} (${listener.address().family})`)
 });
