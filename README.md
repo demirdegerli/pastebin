@@ -1,6 +1,10 @@
 # Pastebin
 Simple pastebin server with encryption support.
 
+## Screenshots
+![desktop](screenshots/desktop.png)
+![mobile](screenshots/mobile.png)
+
 ## Get started
 Install all required dependencies
 ```sh
