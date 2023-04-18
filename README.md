@@ -2,8 +2,8 @@
 Simple pastebin server with encryption support.
 
 ## Screenshots
-![desktop](screenshots/desktop.png)
-![mobile](screenshots/mobile.png)
+<img src="screenshots/desktop.png" style="height: 300px;"></img>
+<img src="screenshots/mobile.png" style="height: 300px;"></img>
 
 ## Get started
 Install all required dependencies
