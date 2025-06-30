@@ -1,8 +1,6 @@
 # Pastebin
 Simple pastebin server with encryption support.
 
-Live Demo: [pastevault.net](https://pastevault.net)
-
 ## Screenshots
 <img src="screenshots/desktop.png" style="height: 17vh;"></img>
 <img src="screenshots/mobile.png" style="height: 17vh;"></img>
